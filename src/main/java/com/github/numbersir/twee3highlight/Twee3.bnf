@@ -1,0 +1,62 @@
+{
+    parserClass="com.github.numbersir.twee3highlight.parser.Twee3Parser"
+    parserUtilClass="com.github.numbersir.twee3highlight.parser.Twee3ParserUtil"
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Twee3"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.github.numbersir.twee3highlight.psi"
+    psiImplPackage="com.github.numbersir.twee3highlight.psi.impl"
+
+    elementTypeHolderClass="com.github.numbersir.twee3highlight.psi.Twee3Types"
+    elementTypeClass="com.github.numbersir.twee3highlight.psi.Twee3ElementType"
+    tokenTypeClass="com.github.numbersir.twee3highlight.psi.Twee3TokenType"
+
+    psiImplUtilClass="com.github.numbersir.twee3highlight.psi.impl.Twee3PsiImplUtil"
+
+    tokens=[
+        // from sugarcube-2 patterns.js
+        SPACE_NO_TERMINATOR='regexp:[\u0020\f\t\v\u00a0\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]'
+        LINE_TERMINATOR='regexp:[\n\r\u2028\u2029]'
+        ANY_CHAR='regexp:.|{LINE_TERMINATOR}'
+        ANY_LETTER='regexp:[0-9A-Z_a-z\-\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u00ff\u0150\u0170\u0151\u0171]'
+        IDENTIFIER_FIRST_CHAR='regexp:[$A-Z_a-z]'
+        IDENTIFIER_NEXT_CHAR='regexp:[$0-9A-Z_a-z]'
+        IDENTIFIER='regexp:{IDENTIFIER_FIRST_CHAR}{IDENTIFIER_NEXT_CHAR}*'
+        VARIABLE_SIGIL='regexp:[$_]'
+        VARIABLE='regexp:{VARIABLE_SIGIL}{IDENTIFIER}'
+        MACRO_NAME='regexp:[A-Za-z][\w-]*|[=-]'
+        TEMPLATE_NAME='regexp:[A-Za-z][\w-]*'
+        C_EN_CHAR='regexp:[\x2D.0-9A-Z_a-z\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C\u200D\u203F\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]|[\uD800-\uDB7F][\uDC00-\uDFFF]'
+        HTML_TAG_NAME='regexp:[A-Za-z]{C_EN_CHAR}*-{C_EN_CHAR}*|[0-9A-Za-z]*'
+        CSS_ID_OR_CLASS_SIGIL='regexp:[#.]'
+        CSS_IMAGE='regexp:\[[<>]?[Ii][Mm][Gg]\[\s|\S*?]]+'
+        TW_STYLE='regexp:({ANY_LETTER}+)\\(([^\\)|n]+)\\):'
+        CSS_STYLE='regexp:{SPACE_NO_TERMINATOR}*({ANY_LETTER}+){SPACE_NO_TERMINATOR}*:([^;\\|n]+);'
+        ID_OR_CLASS='regexp:{SPACE_NO_TERMINATOR}*({CSS_ID_OR_CLASS_SIGIL}{ANY_LETTER}+{SPACE_NO_TERMINATOR}*+);'
+        INLINE_CSS='regexp:{TW_STYLE}|{CSS_STYLE}|{ID_OR_CLASS}'
+        URL="regexp:file|https?|mailto|ftp|javascript|irc|news|data:[^\s'\"]+"
+
+        // from sugarcube-2 parserlib.js
+        QUOTE_BY_BLOCK_MATCH='regexp:^<<<\n'
+        QUOTE_BY_BLOCK_TERMINATOR='regexp:^<<<\n'
+        QUOTE_BY_LINE_MATCH='regexp:^>+'
+        QUOTE_BY_LINE_LOOKAHEAD='regexp:^>+'
+        QUOTE_BY_LINE_TERMINATOR='regexp:\n'
+        MACRO_MATCH='regexp:<<'
+        MACRO_LOOKAHEAD="regexp:<<<(/?{MACRO_NAME})\s*((?:/\*[^*]*\*+(?:[^/*][^*]*\*+)*/|//.*\n|`(?:\\.|[^`\\])*`|\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*'|\[(?:[<>]?[Ii][Mm][Gg])?\[[^\r\n]*?]]+|[^>]|>(?!>))*)>>"
+    ]
+}
+
+twee3File ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY
+{
+    mixin="com.github.numbersir.twee3highlight.psi.impl.Twee3NamedElementImpl"
+    implements="com.github.numbersir.twee3highlight.psi.Twee3NamedElement"
+    methods=[getKey getValue getName setName getNameIdentifier getPresentation]
+}
+
+// from sugarcube-2 parserlib.js

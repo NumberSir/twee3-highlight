@@ -1,0 +1,19 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+	<title>twine-svg</title>
+	<defs>
+		<linearGradient id="g1" x1="4" y1="0" x2="3.6" y2="11.3" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#127aee" stop-opacity="1"/>
+			<stop offset="1" stop-color="#117aef" stop-opacity=".25"/>
+		</linearGradient>
+		<linearGradient id="g2" x1=".8" y1="9" x2="15.2" y2="9" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#10f05e" stop-opacity=".25"/>
+			<stop offset="1" stop-color="#10f05e" stop-opacity="1"/>
+		</linearGradient>
+	</defs>
+	<style>
+		.s0 { fill: url(#g1) } 
+		.s1 { fill: url(#g2) } 
+	</style>
+	<path id="Layer" class="s0" d="m1 0h6v16h-6z"/>
+	<path id="Layer" class="s1" d="m1 13c0-11 14-11 14-11v6c0 0-8 0-8 5v3h-6z"/>
+</svg>

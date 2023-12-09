@@ -1,18 +1,72 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.numbersir.twee3highlight</id>
-    <name>twee3-highlight Template</name>
-    <vendor>numbersir</vendor>
+    <name>Twee3-Syntax-Highlight</name>
+    <vendor>Number_Sir</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.numbersir.twee3highlight.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <fileType
+            name="Twee3 File"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3FileType"
+            fieldName="INSTANCE"
+            language="Twee3"
+            extensions="twee"/>
+        <lang.parserDefinition
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3ParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3SyntaxHighlighterFactory"/>
+        <colorSettingsPage
+            implementation="com.github.numbersir.twee3highlight.Twee3ColorSettingsPage"/>
+        <annotator
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3Annotator"/>
+        <codeInsight.lineMarkerProvider
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3LineMarkerProvider"/>
+        <completion.contributor
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3CompletionContributor"/>
+        <psi.referenceContributor
+            language="Twee3"
+            implementation="com.github.numbersir.twee3highlight.Twee3ReferenceContributor"/>
+        <lang.refactoringSupport
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3RefactoringSupportProvider"/>
+        <lang.findUsagesProvider
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3FindUsagesProvider"/>
+        <lang.foldingBuilder
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3FoldingBuilder"/>
+        <gotoSymbolContributor
+            implementation="com.github.numbersir.twee3highlight.Twee3ChooseByNameContributor"/>
+        <lang.psiStructureViewFactory
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3StructureViewFactory"/>
+        <navbar
+            implementation="com.github.numbersir.twee3highlight.Twee3StructureAwareNavbar"/>
+        <lang.formatter
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3FormattingModelBuilder"/>
+        <codeStyleSettingsProvider
+            implementation="com.github.numbersir.twee3highlight.Twee3CodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider
+            implementation="com.github.numbersir.twee3highlight.Twee3LanguageCodeStyleSettingsProvider"/>
+        <lang.commenter
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3Commenter"/>
+        <lang.documentationProvider
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3DocumentationProvider"/>
+        <spellchecker.support
+            language="Twee3"
+            implementationClass="com.github.numbersir.twee3highlight.Twee3SpellcheckingStrategy"/>
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.numbersir.twee3highlight.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
 </idea-plugin>
